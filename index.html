@@ -1,105 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tienda de Denix</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herboluz - Tienda de Hierbas Naturales</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfaf6;
+      color: #333;
     }
-
     header {
-      background-color: #222;
+      background-color: #6b8e23;
       color: white;
-      padding: 20px;
       text-align: center;
+      padding: 2rem;
     }
-
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+    }
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      gap: 1.5rem;
+      padding: 2rem;
     }
-
     .producto {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
       text-align: center;
     }
-
     .producto img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 0.5rem;
     }
-
     .producto h3 {
-      margin: 10px 0 5px;
+      margin: 0.5rem 0 0.3rem;
     }
-
     .producto p {
-      color: #555;
+      margin: 0.2rem 0;
     }
-
-    .boton-comprar {
-      background-color: #28a745;
+    .agregar {
+      margin-top: 0.5rem;
+      background-color: #6b8e23;
       color: white;
-      padding: 10px 15px;
+      padding: 0.5rem 1rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 0.5rem;
       cursor: pointer;
-      margin-top: 10px;
     }
-
+    .carrito {
+      background-color: #fffbe6;
+      padding: 1rem;
+      border-top: 2px solid #e0e0e0;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+    }
+    .carrito h2 {
+      margin-top: 0;
+    }
     footer {
-      background-color: #222;
+      background-color: #6b8e23;
       color: white;
       text-align: center;
-      padding: 15px;
-      margin-top: 30px;
+      padding: 1rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Tienda de Denix</h1>
-    <p>Los mejores productos seleccionados para vos</p>
+    <h1>Herboluz</h1>
+    <p>Hierbas naturales para el cuerpo y el alma</p>
   </header>
 
-  <section class="productos">
-    <div class="producto">
-      <img src="https://via.placeholder.com/300x200" alt="Producto 1">
-      <h3>Remera Negra</h3>
-      <p>$3.500</p>
-      <button class="boton-comprar">Comprar</button>
-    </div>
+  <section class="productos" id="productos">
+    <!-- Productos -->
+  </section>
 
-    <div class="producto">
-      <img src="https://via.placeholder.com/300x200" alt="Producto 2">
-      <h3>Campera de Jean</h3>
-      <p>$12.000</p>
-      <button class="boton-comprar">Comprar</button>
-    </div>
-
-    <div class="producto">
-      <img src="https://via.placeholder.com/300x200" alt="Producto 3">
-      <h3>Gorra Street</h3>
-      <p>$2.800</p>
-      <button class="boton-comprar">Comprar</button>
-    </div>
+  <section class="carrito">
+    <h2>🛒 Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <p><strong>Total: $<span id="total">0</span></strong></p>
   </section>
 
   <footer>
-    <p>&copy; 2025 Tienda de Denix. Todos los derechos reservados.</p>
+    <p>Contacto: contacto@herboluz.com | Instagram: @herboluz</p>
+    <p>&copy; 2025 Herboluz</p>
   </footer>
 
+  <script>
+    const productos = [
+      { nombre: 'Canela en rama', precio: 1200 },
+      { nombre: 'Burrito seco', precio: 1000 },
+      { nombre: 'Poleo', precio: 950 },
+      { nombre: 'Menta natural', precio: 1100 },
+      { nombre: 'Clavo de olor', precio: 1400 },
+      { nombre: 'Manzanilla', precio: 980 }
+    ];
+
+    const contenedor = document.getElementById('productos');
+    const listaCarrito = document.getElementById('lista-carrito');
+    const total = document.getElementById('total');
+
+    let carrito = [];
+
+    productos.forEach((prod, index) => {
+      const card = document.createElement('div');
+      card.classList.add('producto');
+      card.innerHTML = `
+        <img src="https://via.placeholder.com/300x200?text=${prod.nombre}" alt="${prod.nombre}">
+        <h3>${prod.nombre}</h3>
+        <p>$${prod.precio}</p>
+        <button class="agregar" onclick="agregarAlCarrito(${index})">Agregar</button>
+      `;
+      contenedor.appendChild(card);
+    });
+
+    function agregarAlCarrito(index) {
+      const prod = productos[index];
+      carrito.push(prod);
+      renderCarrito();
+    }
+
+    function renderCarrito() {
+      listaCarrito.innerHTML = '';
+      let suma = 0;
+      carrito.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.nombre} - $${item.precio}`;
+        listaCarrito.appendChild(li);
+        suma += item.precio;
+      });
+      total.textContent = suma;
+    }
+  </script>
 </body>
 </html>
-
