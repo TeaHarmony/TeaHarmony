@@ -182,107 +182,20 @@
   </style>
 </head>
 <body>
-  <!-- HTML actualizado dinámicamente con JS -->
   <div id="root"></div>
   <script>
-    const productos = [
-      { nombre: 'Canela en rama', precio: 1200, img: 'https://cdn.pixabay.com/photo/2016/10/22/20/34/cinnamon-stick-1760055_1280.jpg', categoria: 'Aromáticos' },
-      { nombre: 'Menta', precio: 1100, img: 'https://cdn.pixabay.com/photo/2017/06/21/08/54/mint-2420080_1280.jpg', categoria: 'Hierbas' },
-      { nombre: 'Manzanilla', precio: 980, img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/chamomile-729539_1280.jpg', categoria: 'Hierbas' },
-      { nombre: 'Lavanda seca', precio: 1350, img: 'https://cdn.pixabay.com/photo/2016/11/29/02/13/lavender-1867298_1280.jpg', categoria: 'Aromáticos' },
+    const productos = [...[
+      { nombre: 'Canela en rama', precio: 1200, img: 'https://images.unsplash.com/photo-1587049352844-cd96b5cc1f5b?auto=format&fit=crop&w=800&q=80', categoria: 'Aromáticos' },
+      { nombre: 'Menta', precio: 1100, img: 'https://images.unsplash.com/photo-1590080877401-d8751f33c1b9?auto=format&fit=crop&w=800&q=80', categoria: 'Hierbas' },
+      { nombre: 'Manzanilla', precio: 980, img: 'https://images.unsplash.com/photo-1622633004649-37f780fe2a2e?auto=format&fit=crop&w=800&q=80', categoria: 'Hierbas' },
+      { nombre: 'Lavanda seca', precio: 1350, img: 'https://images.unsplash.com/photo-1504198266285-165a4dd8b13d?auto=format&fit=crop&w=800&q=80', categoria: 'Aromáticos' },
       { nombre: 'Burrito', precio: 1000, img: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Aloysia_polystachya.jpg', categoria: 'Hierbas' },
-      { nombre: 'Clavo de olor', precio: 1400, img: 'https://cdn.pixabay.com/photo/2018/06/26/09/24/cloves-3490483_1280.jpg', categoria: 'Aromáticos' },
-    ];
-
-    const categorias = [...new Set(productos.map(p => p.categoria))];
-
-    document.getElementById('root').innerHTML = `
-      <header>
-        <h1>Herboluz</h1>
-        <p>Hierbas naturales para el cuerpo y el alma</p>
-      </header>
-      <nav>
-        <a href="#productos">Productos</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-      <section class="seccion" id="productos">
-        <h2>🌿 Nuestros Productos</h2>
-        ${categorias.map(cat => `
-          <h3>${cat}</h3>
-          <div class="productos">
-            ${productos.filter(p => p.categoria === cat).map((prod, i) => `
-              <div class="producto" style="--i:${i}">
-                <img src="${prod.img}" alt="${prod.nombre}">
-                <h3>${prod.nombre}</h3>
-                <p>$${prod.precio}</p>
-                <button class="agregar" onclick="agregarAlCarrito('${prod.nombre}')">Agregar al carrito</button>
-              </div>
-            `).join('')}
-          </div>
-        `).join('')}
-      </section>
-      <section class="seccion" id="contacto">
-        <h2>📞 Contacto</h2>
-        <p>Correo: contacto@herboluz.com</p>
-        <p>Instagram: <a href="https://instagram.com/herboluz" target="_blank">@herboluz</a></p>
-        <p>Facebook: <a href="https://facebook.com/herboluz" target="_blank">Herboluz</a></p>
-        <h3>Formulario de contacto</h3>
-        <form action="enviar.php" method="POST">
-          <input type="text" name="nombre" placeholder="Tu nombre" required>
-          <input type="email" name="email" placeholder="Tu email" required>
-          <textarea name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
-          <button type="submit">Enviar</button>
-        </form>
-      </section>
-      <footer>
-        <p>&copy; 2025 Herboluz - Naturaleza y Bienestar</p>
-      </footer>
-      <button class="toggle-carrito" onclick="toggleCarrito()">🛒 Ver Carrito</button>
-      <div class="carrito-lateral" id="carrito">
-        <h2>🛒 Carrito</h2>
-        <ul id="lista-carrito"></ul>
-        <p><strong>Total: $<span id="total">0</span></strong></p>
-        <button class="btn-comprar" onclick="finalizarCompra()">Finalizar Compra</button>
-      </div>
-    `;
-
-    let carrito = JSON.parse(localStorage.getItem('herboluz_carrito')) || [];
-
-    function agregarAlCarrito(nombre) {
-      const prod = productos.find(p => p.nombre === nombre);
-      carrito.push(prod);
-      localStorage.setItem('herboluz_carrito', JSON.stringify(carrito));
-      renderCarrito();
-      document.getElementById('carrito').classList.add('abierto');
-    }
-
-    function renderCarrito() {
-      const lista = document.getElementById('lista-carrito');
-      const total = document.getElementById('total');
-      lista.innerHTML = '';
-      let suma = 0;
-      carrito.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.nombre} - $${item.precio}`;
-        lista.appendChild(li);
-        suma += item.precio;
-      });
-      total.textContent = suma;
-    }
-
-    function toggleCarrito() {
-      document.getElementById('carrito').classList.toggle('abierto');
-    }
-
-    function finalizarCompra() {
-      if (carrito.length === 0) return alert('Tu carrito está vacío.');
-      alert('¡Gracias por tu compra! Tu pedido está en camino.');
-      carrito = [];
-      localStorage.removeItem('herboluz_carrito');
-      renderCarrito();
-    }
-
-    renderCarrito();
+      { nombre: 'Clavo de olor', precio: 1400, img: 'https://images.unsplash.com/photo-1616485822255-3c2fd04c8e2b?auto=format&fit=crop&w=800&q=80', categoria: 'Aromáticos' },
+      { nombre: 'Aceite esencial de eucalipto', precio: 2300, img: 'https://images.unsplash.com/photo-1632788872267-6bfb96bcf3b0?auto=format&fit=crop&w=800&q=80', categoria: 'Aceites' },
+      { nombre: 'Jabón natural de caléndula', precio: 1500, img: 'https://images.unsplash.com/photo-1632199507997-cc02d163367f?auto=format&fit=crop&w=800&q=80', categoria: 'Cuidado Personal' },
+      { nombre: 'Té de cedrón', precio: 1150, img: 'https://images.unsplash.com/photo-1615486363682-7aee98e13949?auto=format&fit=crop&w=800&q=80', categoria: 'Hierbas' },
+      { nombre: 'Miel pura orgánica', precio: 3200, img: 'https://images.unsplash.com/photo-1573816253396-7d269f6342d4?auto=format&fit=crop&w=800&q=80', categoria: 'Alimentos Naturales' }
+    ].sort((a, b) => a.precio - b.precio)];
   </script>
 </body>
 </html>
