@@ -4,45 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Herboluz - Tienda de Hierbas Naturales</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7');
+      font-family: 'Raleway', sans-serif;
+      background-color: #f3f3ef;
+      background-image: url('https://cdn.pixabay.com/photo/2016/11/29/06/15/herbs-1867453_1280.jpg');
       background-size: cover;
       background-attachment: fixed;
-      color: #333;
+      color: #2e2e2e;
     }
     header {
-      background-color: rgba(107, 142, 35, 0.9);
+      background-color: rgba(85, 107, 47, 0.85);
       color: white;
       text-align: center;
       padding: 3rem 1rem;
+      font-family: 'Playfair Display', serif;
     }
     header h1 {
       margin: 0;
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
     header p {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
     }
     nav {
-      background-color: #f4f4f4;
+      background-color: #fefefe;
       padding: 1rem;
       text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     nav a {
-      margin: 0 1rem;
-      color: #6b8e23;
+      margin: 0 1.5rem;
+      color: #4e6b2b;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
     .seccion {
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: rgba(255, 255, 255, 0.97);
       margin: 2rem auto;
       max-width: 1200px;
       border-radius: 1rem;
       padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
     .productos {
       display: grid;
@@ -55,6 +62,21 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       padding: 1rem;
       text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+      animation-delay: calc(0.1s * var(--i));
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .producto:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
     .producto img {
       width: 100%;
@@ -64,118 +86,203 @@
     }
     .producto h3 {
       margin: 0.5rem 0 0.3rem;
+      font-size: 1.2rem;
     }
     .producto p {
       margin: 0.2rem 0;
     }
     .agregar {
       margin-top: 0.5rem;
-      background-color: #6b8e23;
+      background-color: #5a7c2f;
       color: white;
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
+      font-weight: bold;
     }
-    .carrito {
-      background-color: #fffbe6;
+    .carrito-lateral {
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 300px;
+      background-color: #fdfdf8;
+      box-shadow: -4px 0 8px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
       padding: 2rem;
-      margin: 2rem auto;
-      max-width: 1200px;
-      border-radius: 1rem;
+      overflow-y: auto;
+      z-index: 999;
     }
-    .carrito h2 {
-      margin-top: 0;
+    @media (max-width: 768px) {
+      .carrito-lateral {
+        width: 100%;
+      }
+    }
+    .carrito-lateral.abierto {
+      transform: translateX(0);
+    }
+    .toggle-carrito {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #4e6b2b;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      z-index: 1000;
+    }
+    .btn-comprar {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.75rem 1.5rem;
+      background-color: #4e6b2b;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
     }
     footer {
-      background-color: #6b8e23;
+      background-color: #4e6b2b;
       color: white;
       text-align: center;
       padding: 1rem;
       margin-top: 2rem;
     }
+    #contacto {
+      margin-bottom: 5rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+    form input, form textarea {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: 'Raleway', sans-serif;
+    }
+    form button {
+      background-color: #4e6b2b;
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Herboluz</h1>
-    <p>Hierbas naturales para el cuerpo y el alma</p>
-  </header>
-
-  <nav>
-    <a href="#productos">Productos</a>
-    <a href="#carrito">Carrito</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-
-  <section class="seccion" id="productos">
-    <h2>🌿 Nuestros Productos</h2>
-    <div class="productos" id="contenedor-productos"></div>
-  </section>
-
-  <section class="carrito seccion" id="carrito">
-    <h2>🛒 Carrito</h2>
-    <ul id="lista-carrito"></ul>
-    <p><strong>Total: $<span id="total">0</span></strong></p>
-  </section>
-
-  <section class="seccion" id="contacto">
-    <h2>📞 Contacto</h2>
-    <p>Correo: contacto@herboluz.com</p>
-    <p>Instagram: <a href="https://instagram.com/herboluz" target="_blank">@herboluz</a></p>
-    <p>Facebook: <a href="https://facebook.com/herboluz" target="_blank">Herboluz</a></p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Herboluz - Naturaleza y Bienestar</p>
-  </footer>
-
+  <!-- HTML actualizado dinámicamente con JS -->
+  <div id="root"></div>
   <script>
     const productos = [
-      { nombre: 'Canela en rama', precio: 1200, img: 'https://cdn.pixabay.com/photo/2017/09/26/13/39/cinnamon-2788653_1280.jpg' },
-      { nombre: 'Burrito seco', precio: 1000, img: 'https://www.cronista.com/files/image/545/545213/60a29c589b1a1.jpg' },
-      { nombre: 'Poleo', precio: 950, img: 'https://www.infocampo.com.ar/wp-content/uploads/2022/06/poleo.jpg' },
-      { nombre: 'Menta natural', precio: 1100, img: 'https://cdn.pixabay.com/photo/2017/04/11/22/56/mint-2220364_1280.jpg' },
-      { nombre: 'Clavo de olor', precio: 1400, img: 'https://cdn.pixabay.com/photo/2016/05/06/09/05/cloves-1371128_1280.jpg' },
-      { nombre: 'Manzanilla', precio: 980, img: 'https://cdn.pixabay.com/photo/2021/03/01/13/20/chamomile-6060467_1280.jpg' }
+      { nombre: 'Canela en rama', precio: 1200, img: 'https://cdn.pixabay.com/photo/2016/10/22/20/34/cinnamon-stick-1760055_1280.jpg', categoria: 'Aromáticos' },
+      { nombre: 'Menta', precio: 1100, img: 'https://cdn.pixabay.com/photo/2017/06/21/08/54/mint-2420080_1280.jpg', categoria: 'Hierbas' },
+      { nombre: 'Manzanilla', precio: 980, img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/chamomile-729539_1280.jpg', categoria: 'Hierbas' },
+      { nombre: 'Lavanda seca', precio: 1350, img: 'https://cdn.pixabay.com/photo/2016/11/29/02/13/lavender-1867298_1280.jpg', categoria: 'Aromáticos' },
+      { nombre: 'Burrito', precio: 1000, img: 'https://upload.wikimedia.org/wikipedia/commons/3/33/Aloysia_polystachya.jpg', categoria: 'Hierbas' },
+      { nombre: 'Clavo de olor', precio: 1400, img: 'https://cdn.pixabay.com/photo/2018/06/26/09/24/cloves-3490483_1280.jpg', categoria: 'Aromáticos' },
     ];
 
-    const contenedor = document.getElementById('contenedor-productos');
-    const listaCarrito = document.getElementById('lista-carrito');
-    const total = document.getElementById('total');
+    const categorias = [...new Set(productos.map(p => p.categoria))];
 
-    let carrito = [];
+    document.getElementById('root').innerHTML = `
+      <header>
+        <h1>Herboluz</h1>
+        <p>Hierbas naturales para el cuerpo y el alma</p>
+      </header>
+      <nav>
+        <a href="#productos">Productos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <section class="seccion" id="productos">
+        <h2>🌿 Nuestros Productos</h2>
+        ${categorias.map(cat => `
+          <h3>${cat}</h3>
+          <div class="productos">
+            ${productos.filter(p => p.categoria === cat).map((prod, i) => `
+              <div class="producto" style="--i:${i}">
+                <img src="${prod.img}" alt="${prod.nombre}">
+                <h3>${prod.nombre}</h3>
+                <p>$${prod.precio}</p>
+                <button class="agregar" onclick="agregarAlCarrito('${prod.nombre}')">Agregar al carrito</button>
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
+      </section>
+      <section class="seccion" id="contacto">
+        <h2>📞 Contacto</h2>
+        <p>Correo: contacto@herboluz.com</p>
+        <p>Instagram: <a href="https://instagram.com/herboluz" target="_blank">@herboluz</a></p>
+        <p>Facebook: <a href="https://facebook.com/herboluz" target="_blank">Herboluz</a></p>
+        <h3>Formulario de contacto</h3>
+        <form action="enviar.php" method="POST">
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
+          <input type="email" name="email" placeholder="Tu email" required>
+          <textarea name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </section>
+      <footer>
+        <p>&copy; 2025 Herboluz - Naturaleza y Bienestar</p>
+      </footer>
+      <button class="toggle-carrito" onclick="toggleCarrito()">🛒 Ver Carrito</button>
+      <div class="carrito-lateral" id="carrito">
+        <h2>🛒 Carrito</h2>
+        <ul id="lista-carrito"></ul>
+        <p><strong>Total: $<span id="total">0</span></strong></p>
+        <button class="btn-comprar" onclick="finalizarCompra()">Finalizar Compra</button>
+      </div>
+    `;
 
-    productos.forEach((prod, index) => {
-      const card = document.createElement('div');
-      card.classList.add('producto');
-      card.innerHTML = `
-        <img src="${prod.img}" alt="${prod.nombre}">
-        <h3>${prod.nombre}</h3>
-        <p>$${prod.precio}</p>
-        <button class="agregar" onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
-      `;
-      contenedor.appendChild(card);
-    });
+    let carrito = JSON.parse(localStorage.getItem('herboluz_carrito')) || [];
 
-    function agregarAlCarrito(index) {
-      const prod = productos[index];
+    function agregarAlCarrito(nombre) {
+      const prod = productos.find(p => p.nombre === nombre);
       carrito.push(prod);
+      localStorage.setItem('herboluz_carrito', JSON.stringify(carrito));
       renderCarrito();
+      document.getElementById('carrito').classList.add('abierto');
     }
 
     function renderCarrito() {
-      listaCarrito.innerHTML = '';
+      const lista = document.getElementById('lista-carrito');
+      const total = document.getElementById('total');
+      lista.innerHTML = '';
       let suma = 0;
       carrito.forEach(item => {
         const li = document.createElement('li');
         li.textContent = `${item.nombre} - $${item.precio}`;
-        listaCarrito.appendChild(li);
+        lista.appendChild(li);
         suma += item.precio;
       });
       total.textContent = suma;
     }
+
+    function toggleCarrito() {
+      document.getElementById('carrito').classList.toggle('abierto');
+    }
+
+    function finalizarCompra() {
+      if (carrito.length === 0) return alert('Tu carrito está vacío.');
+      alert('¡Gracias por tu compra! Tu pedido está en camino.');
+      carrito = [];
+      localStorage.removeItem('herboluz_carrito');
+      renderCarrito();
+    }
+
+    renderCarrito();
   </script>
 </body>
 </html>
-
