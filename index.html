@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tienda de Denix</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .producto {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .producto img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .producto h3 {
+      margin: 10px 0 5px;
+    }
+
+    .producto p {
+      color: #555;
+    }
+
+    .boton-comprar {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Tienda de Denix</h1>
+    <p>Los mejores productos seleccionados para vos</p>
+  </header>
+
+  <section class="productos">
+    <div class="producto">
+      <img src="https://via.placeholder.com/300x200" alt="Producto 1">
+      <h3>Remera Negra</h3>
+      <p>$3.500</p>
+      <button class="boton-comprar">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="https://via.placeholder.com/300x200" alt="Producto 2">
+      <h3>Campera de Jean</h3>
+      <p>$12.000</p>
+      <button class="boton-comprar">Comprar</button>
+    </div>
+
+    <div class="producto">
+      <img src="https://via.placeholder.com/300x200" alt="Producto 3">
+      <h3>Gorra Street</h3>
+      <p>$2.800</p>
+      <button class="boton-comprar">Comprar</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Tienda de Denix. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
+
