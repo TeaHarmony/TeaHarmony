@@ -8,37 +8,58 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fdfaf6;
+      background-image: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7');
+      background-size: cover;
+      background-attachment: fixed;
       color: #333;
     }
     header {
-      background-color: #6b8e23;
+      background-color: rgba(107, 142, 35, 0.9);
       color: white;
       text-align: center;
-      padding: 2rem;
+      padding: 3rem 1rem;
     }
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
     header p {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+    }
+    nav {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: #6b8e23;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .seccion {
+      background-color: rgba(255, 255, 255, 0.95);
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 1rem;
+      padding: 2rem;
     }
     .productos {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
+      gap: 2rem;
     }
     .producto {
-      background-color: white;
+      background-color: #ffffff;
       border-radius: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       padding: 1rem;
       text-align: center;
     }
     .producto img {
       width: 100%;
+      height: 180px;
+      object-fit: cover;
       border-radius: 0.5rem;
     }
     .producto h3 {
@@ -58,11 +79,10 @@
     }
     .carrito {
       background-color: #fffbe6;
-      padding: 1rem;
-      border-top: 2px solid #e0e0e0;
-      position: sticky;
-      bottom: 0;
-      width: 100%;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      border-radius: 1rem;
     }
     .carrito h2 {
       margin-top: 0;
@@ -82,32 +102,45 @@
     <p>Hierbas naturales para el cuerpo y el alma</p>
   </header>
 
-  <section class="productos" id="productos">
-    <!-- Productos -->
+  <nav>
+    <a href="#productos">Productos</a>
+    <a href="#carrito">Carrito</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="seccion" id="productos">
+    <h2>🌿 Nuestros Productos</h2>
+    <div class="productos" id="contenedor-productos"></div>
   </section>
 
-  <section class="carrito">
+  <section class="carrito seccion" id="carrito">
     <h2>🛒 Carrito</h2>
     <ul id="lista-carrito"></ul>
     <p><strong>Total: $<span id="total">0</span></strong></p>
   </section>
 
+  <section class="seccion" id="contacto">
+    <h2>📞 Contacto</h2>
+    <p>Correo: contacto@herboluz.com</p>
+    <p>Instagram: <a href="https://instagram.com/herboluz" target="_blank">@herboluz</a></p>
+    <p>Facebook: <a href="https://facebook.com/herboluz" target="_blank">Herboluz</a></p>
+  </section>
+
   <footer>
-    <p>Contacto: contacto@herboluz.com | Instagram: @herboluz</p>
-    <p>&copy; 2025 Herboluz</p>
+    <p>&copy; 2025 Herboluz - Naturaleza y Bienestar</p>
   </footer>
 
   <script>
     const productos = [
-      { nombre: 'Canela en rama', precio: 1200 },
-      { nombre: 'Burrito seco', precio: 1000 },
-      { nombre: 'Poleo', precio: 950 },
-      { nombre: 'Menta natural', precio: 1100 },
-      { nombre: 'Clavo de olor', precio: 1400 },
-      { nombre: 'Manzanilla', precio: 980 }
+      { nombre: 'Canela en rama', precio: 1200, img: 'https://cdn.pixabay.com/photo/2017/09/26/13/39/cinnamon-2788653_1280.jpg' },
+      { nombre: 'Burrito seco', precio: 1000, img: 'https://www.cronista.com/files/image/545/545213/60a29c589b1a1.jpg' },
+      { nombre: 'Poleo', precio: 950, img: 'https://www.infocampo.com.ar/wp-content/uploads/2022/06/poleo.jpg' },
+      { nombre: 'Menta natural', precio: 1100, img: 'https://cdn.pixabay.com/photo/2017/04/11/22/56/mint-2220364_1280.jpg' },
+      { nombre: 'Clavo de olor', precio: 1400, img: 'https://cdn.pixabay.com/photo/2016/05/06/09/05/cloves-1371128_1280.jpg' },
+      { nombre: 'Manzanilla', precio: 980, img: 'https://cdn.pixabay.com/photo/2021/03/01/13/20/chamomile-6060467_1280.jpg' }
     ];
 
-    const contenedor = document.getElementById('productos');
+    const contenedor = document.getElementById('contenedor-productos');
     const listaCarrito = document.getElementById('lista-carrito');
     const total = document.getElementById('total');
 
@@ -117,10 +150,10 @@
       const card = document.createElement('div');
       card.classList.add('producto');
       card.innerHTML = `
-        <img src="https://via.placeholder.com/300x200?text=${prod.nombre}" alt="${prod.nombre}">
+        <img src="${prod.img}" alt="${prod.nombre}">
         <h3>${prod.nombre}</h3>
         <p>$${prod.precio}</p>
-        <button class="agregar" onclick="agregarAlCarrito(${index})">Agregar</button>
+        <button class="agregar" onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
       `;
       contenedor.appendChild(card);
     });
@@ -145,3 +178,4 @@
   </script>
 </body>
 </html>
+
