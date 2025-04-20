@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Herboluz - Producto Detalles">
+    <meta name="author" content="Herboluz">
+    <title>Herboluz - Detalles del Producto</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="assets/images/logo.png" alt="Herboluz"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="about.html">Nosotros</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sección Detalles del Producto -->
+    <section class="producto-detalle">
+        <div class="contenedor-detalle">
+            <div class="producto-imagen" id="producto-imagen"></div>
+            <div class="producto-info" id="producto-info">
+                <!-- Información del producto se carga aquí dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Herboluz. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://facebook.com/herboluz" target="_blank">Facebook</a>
+            <a href="https://instagram.com/herboluz" target="_blank">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- Carrito flotante -->
+    <div id="carrito-flotante" class="carrito-flotante oculto">
+        <h3>Mi Carrito</h3>
+        <div id="carrito-items" class="carrito-items"></div>
+        <div class="carrito-total">
+            <p>Total: $<span id="total-carrito">0</span></p>
+            <button id="cerrar-carrito" class="btn-cerrar">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Botón flotante para abrir el carrito -->
+    <button id="boton-carrito" class="boton-flotante">🛒</button>
+
+    <script>
+        function actualizarCarrito() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const contenedor = document.getElementById('carrito-items');
+            const total = document.getElementById('total-carrito');
+            contenedor.innerHTML = '';
+            let totalPrecio = 0;
+    
+            carrito.forEach((producto, index) => {
+                const item = document.createElement('div');
+                item.innerHTML = `
+                    <p><strong>${producto.nombre}</strong> - $${producto.precio} x ${producto.cantidad}
+                    <span class="btn-eliminar" onclick="eliminarDelCarrito(${index})">🗑️</span>
+                    </p>
+                `;
+                contenedor.appendChild(item);
+                totalPrecio += producto.precio * producto.cantidad;
+            });
+    
+            total.textContent = totalPrecio.toFixed(2);
+        }
+    
+        function eliminarDelCarrito(index) {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            carrito.splice(index, 1);
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            actualizarCarrito();
+        }
+    
+        function toggleCarrito(abierto = null) {
+            const carrito = document.getElementById('carrito-flotante');
+            if (abierto === true) {
+                carrito.classList.add('visible');
+            } else if (abierto === false) {
+                carrito.classList.remove('visible');
+            } else {
+                carrito.classList.toggle('visible');
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const botonCarrito = document.getElementById('boton-carrito');
+            const cerrarCarrito = document.getElementById('cerrar-carrito');
+    
+            botonCarrito.addEventListener('click', () => {
+                toggleCarrito();
+                actualizarCarrito();
+            });
+    
+            cerrarCarrito.addEventListener('click', () => {
+                toggleCarrito(false);
+            });
+    
+            actualizarCarrito();
+        });
+    
+        const params = new URLSearchParams(window.location.search);
+        const nombreProducto = params.get('nombre');
+    
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(data => {
+                const producto = data.find(p => p.nombre === nombreProducto);
+                if (producto) {
+                    document.getElementById('producto-imagen').innerHTML = `
+                        <img src="${producto.imagen}" alt="${producto.nombre}">
+                    `;
+                    document.getElementById('producto-info').innerHTML = `
+                        <h2>${producto.nombre}</h2>
+                        <p>${producto.descripcion}</p>
+                        <p><strong>Precio:</strong> $${producto.precio}</p>
+                        <button class="btn" id="agregarCarrito">Agregar al Carrito</button>
+                    `;
+    
+                    document.getElementById('agregarCarrito').addEventListener('click', () => {
+                        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                        const index = carrito.findIndex(item => item.nombre === producto.nombre);
+    
+                        if (index !== -1) {
+                            carrito[index].cantidad += 1;
+                        } else {
+                            carrito.push({
+                                nombre: producto.nombre,
+                                precio: producto.precio,
+                                imagen: producto.imagen,
+                                cantidad: 1
+                            });
+                        }
+    
+                        localStorage.setItem('carrito', JSON.stringify(carrito));
+                        actualizarCarrito();
+                        toggleCarrito(true); // abrir carrito automáticamente
+                    });
+                } else {
+                    document.getElementById('producto-info').innerHTML = '<p>Producto no encontrado.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los detalles del producto:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Aceite de Lavanda",
+        "descripcion": "Relajante y calmante para la piel.",
+        "imagen": "assets/images/aceite-lavanda.jpg",
+        "precio": "$10"
+    },
+    {
+        "nombre": "Aceite de Romero",
+        "descripcion": "Estimula la circulación y energiza.",
+        "imagen": "assets/images/aceite-de-romero.jpg",
+        "precio": "$12"
+    },
+    {
+        "nombre": "Aceite de Caléndula",
+        "descripcion": "Ideal para pieles sensibles.",
+        "imagen": "assets/images/aceite-de-calendula.jpg",
+        "precio": "$15"
+    },
+    {
+        "nombre": "Aceite de Árbol de Té",
+        "descripcion": "Antiséptico natural para la piel.",
+        "imagen": "assets/images/aceite-arbol-de-te.jpg",
+        "precio": "$8"
+    },
+    {
+        "nombre": "Aceite de Eucalipto",
+        "descripcion": "Alivia la respiración y refresca la piel.",
+        "imagen": "assets/images/aceite-de-eucalipto.jpg",
+        "precio": "$9"
+    }
+]
