@@ -1,135 +1,214 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Herboluz - Tienda de Hierbas Naturales</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1500&q=80');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      color: #2f3e46;
-    }
-    header {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      text-align: center;
-      padding: 4rem 2rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      background-color: rgba(202, 210, 197, 0.9);
-      padding: 1rem;
-    }
-    nav a {
-      color: #2f3e46;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .seccion {
-      padding: 2rem;
-      background-color: rgba(255, 255, 255, 0.85);
-      margin: 1rem;
-      border-radius: 1rem;
-    }
-    .productos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-    }
-    .producto {
-      background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      padding: 1rem;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .producto:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    }
-    .producto img {
-      max-width: 100%;
-      border-radius: 0.5rem;
-      height: 150px;
-      object-fit: cover;
-    }
-    .producto h3 {
-      margin: 0.5rem 0 0.2rem;
-    }
-    .producto p {
-      color: #52796f;
-      font-weight: bold;
-    }
-    .agregar {
-      background-color: #84a98c;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background-color 0.3s ease;
-    }
-    .agregar:hover {
-      background-color: #52796f;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: rgba(202, 210, 197, 0.9);
-      margin-top: 3rem;
-    }
-    .toggle-carrito {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: #52796f;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      cursor: pointer;
-      z-index: 1000;
-    }
-    .carrito-lateral {
-      position: fixed;
-      top: 0;
-      right: -350px;
-      width: 300px;
-      height: 100%;
-      background-color: white;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
-      padding: 2rem;
-      overflow-y: auto;
-      transition: right 0.3s ease;
-      z-index: 999;
-    }
-    .carrito-lateral.abierto {
-      right: 0;
-    }
-    .btn-comprar {
-      background-color: #84a98c;
-      color: white;
-      border: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Herboluz - Productos orgánicos y naturales para el bienestar">
+    <meta name="author" content="Herboluz">
+    <title>Herboluz - Tienda de Productos Naturales</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .slider-item {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+            display: none;
+        }
+
+        .slider-item.active {
+            display: block;
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-<!-- contenido restante sin cambios -->
+
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="assets/images/logo.png" alt="Herboluz"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="about.html">Nosotros</a></li>
+                <!-- Este es el botón para abrir el carrito flotante -->
+                <li><a href="javascript:void(0);" id="btn-carrito">🛒 Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Carrousel de productos destacados) -->
+    <section class="hero">
+        <div class="slider" id="slider">
+            <div class="slider-item active">
+                <img src="assets/images/aceite-lavanda.jpg" alt="Aceite de Lavanda">
+                <div class="slider-text">
+                    <h1>Aceite de Lavanda</h1>
+                    <p>Relajante y calmante para la piel.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Lavanda" class="btn">Ver Más</a>
+                </div>
+            </div>
+            <div class="slider-item">
+                <img src="assets/images/aceite-de-romero.jpg" alt="Aceite de Romero">
+                <div class="slider-text">
+                    <h1>Aceite de Romero</h1>
+                    <p>Estimula la circulación y energiza.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Romero" class="btn">Ver Más</a>
+                </div>
+            </div>
+            <div class="slider-item">
+                <img src="assets/images/aceite-de-calendula.jpg" alt="Aceite de Caléndula">
+                <div class="slider-text">
+                    <h1>Aceite de Caléndula</h1>
+                    <p>Ideal para pieles sensibles.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Cal%C3%A9ndula" class="btn">Ver Más</a>
+                </div>
+            </div>
+            <div class="slider-item">
+                <img src="assets/images/aceite-de-eucalipto.jpg" alt="Aceite de Eucalipto">
+                <div class="slider-text">
+                    <h1>Aceite de Eucalipto</h1>
+                    <p>Descongestiona y refresca el ambiente.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Eucalipto" class="btn">Ver Más</a>
+                </div>
+            </div>
+            <div class="slider-item">
+                <img src="https://via.placeholder.com/1200x600.png?text=Aceite+de+Menta" alt="Aceite de Menta">
+                <div class="slider-text">
+                    <h1>Aceite de Menta</h1>
+                    <p>Refrescante y revitalizante.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Menta" class="btn">Ver Más</a>
+                </div>
+            </div>
+            <div class="slider-item">
+                <img src="assets/images/aceite-arbol-de-te.jpg" alt="Aceite de Árbol de Té">
+                <div class="slider-text">
+                    <h1>Aceite de Árbol de Té</h1>
+                    <p>Antibacteriano natural y purificador.</p>
+                    <a href="producto.html?nombre=Aceite%20de%20Arbol%20de%20Te" class="btn">Ver Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Productos Destacados -->
+    <section class="productos-destacados">
+        <h2>Productos Destacados</h2>
+        <div class="productos-grid" id="productos-grid">
+            <!-- Los productos se cargarán aquí dinámicamente desde JSON -->
+        </div>
+    </section>
+
+    <!-- Testimonios de Clientes -->
+    <section class="testimonios">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <div class="testimonio">
+            <p>"Los aceites de Herboluz me han ayudado a mejorar mi piel y mi bienestar. ¡Recomendados!"</p>
+            <p>- Laura, cliente feliz</p>
+        </div>
+        <div class="testimonio">
+            <p>"La entrega fue rápida y los productos son de excelente calidad. ¡Volveré a comprar!"</p>
+            <p>- Andrés, cliente satisfecho</p>
+        </div>
+    </section>
+
+<!-- Carrito flotante (fusión de los dos carritos) -->
+<div class="carrito-flotante" id="carrito-flotante">
+    <h2>Tu Carrito</h2>
+    <ul id="carrito-items"></ul>
+    <div class="carrito-total">
+        Total: $<span id="carrito-total">0</span>
+    </div>
+    <button class="btn" onclick="window.location.href='carrito.html'">Ver Carrito</button>
+    <button class="btn-cerrar" onclick="toggleCarrito()">Cerrar</button>
+</div>
+
+<!-- Botón flotante para abrir el carrito -->
+<button class="boton-flotante" onclick="toggleCarrito()">🛒</button>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Herboluz. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://facebook.com/herboluz" target="_blank">Facebook</a>
+            <a href="https://instagram.com/herboluz" target="_blank">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- Script para cargar los productos -->
+    <script>
+        fetch('productos.json')
+            .then(response => response.json())
+            .then(data => {
+                const productosGrid = document.getElementById('productos-grid');
+                data.forEach(producto => {
+                    const productoHTML = `
+                        <div class="producto-item">
+                            <img src="${producto.imagen}" alt="${producto.nombre}">
+                            <h3>${producto.nombre}</h3>
+                            <p>${producto.descripcion}</p>
+                            <a href="producto.html?nombre=${encodeURIComponent(producto.nombre)}" class="btn">Ver más</a>
+                        </div>
+                    `;
+                    productosGrid.innerHTML += productoHTML;
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar los productos:', error);
+            });
+
+        // Script para carrusel automático
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slider-item');
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 4000);
+    </script>
+    <script src="js/script.js"></script>
+    <script>
+function cargarCarrito() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const carritoItems = document.getElementById('carrito-items');
+    carritoItems.innerHTML = '';
+
+    if (carrito.length === 0) {
+        carritoItems.innerHTML = '<li>Carrito vacío</li>';
+        return;
+    }
+
+    carrito.forEach(producto => {
+        const productoHTML = `
+            <li class="carrito-item">
+                <img src="${producto.imagen}" alt="${producto.nombre}" width="40" height="40" />
+                <span>${producto.nombre}</span> x${producto.cantidad} - $${producto.precio * producto.cantidad}
+            </li>
+        `;
+        carritoItems.innerHTML += productoHTML;
+    });
+}
+
+        window.onload = cargarCarrito;
+    </script>
+    <button class="boton-flotante" onclick="toggleCarrito()">🛒</button>
+    <div class="carrito-flotante" id="carrito">
+      <h2>Tu Carrito</h2>
+      <div class="carrito-items" id="carrito-items"></div>
+      <div class="carrito-total">
+        Total: $<span id="carrito-total">0</span>
+      </div>
+      <button class="btn-cerrar" onclick="toggleCarrito()">Cerrar</button>
+    </div>
+    <script src="js/carrito.js"></script>
+    <script src="js/cargarProductos.js"></script>
+</body>
+</html>
